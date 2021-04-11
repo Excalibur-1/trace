@@ -94,7 +94,12 @@ type Option func(*option)
 // Init init trace report.
 func Init(serviceName string, tags []Tag, cfg *Config) {
 	report := newReport(cfg.Network, cfg.Addr, time.Duration(cfg.Timeout), cfg.ProtocolVersion)
-	_tracer = NewTracer(serviceName, tags, report, cfg.DisableSample)
+	SetGlobalTracer(NewTracer(serviceName, tags, report, cfg.DisableSample))
+}
+
+// SetGlobalTracer SetGlobalTracer
+func SetGlobalTracer(tracer Tracer) {
+	_tracer = tracer
 }
 
 // NewTracer new a tracer.
